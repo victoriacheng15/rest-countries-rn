@@ -9,7 +9,7 @@ import { useCountries } from "@/hooks/useCountryList";
 export default function App() {
 	const { countryList, loading, error } = useCountries();
 	const [search, setSearch] = useState("");
-	const [filteredCountries, setFilteredCountries] = useState(countryList);
+	const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
 
 	const debouncedSearch = useCallback(
 		debounce((query: string) => {
@@ -49,7 +49,7 @@ export default function App() {
 					</View>
 				) : (
 					<FlatList
-						data={filteredCountries}
+						data={search.length > 0 ? filteredCountries : countryList}
 						keyExtractor={(item) => item.cca3}
 						renderItem={({ item }) => (
 							<Card mode="outlined" style={styles.card}>
