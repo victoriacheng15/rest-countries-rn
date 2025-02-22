@@ -1,13 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput, Card, Text, ActivityIndicator } from "react-native-paper";
+import debounce from "lodash.debounce";
 import { COLORS } from "@/utils";
 import { useCountries } from "@/hooks/useCountryList";
 
 export default function App() {
 	const { countryList, loading, error } = useCountries();
 	const [search, setSearch] = useState("");
+	const [filteredCountries, setFilteredCountries] = useState(countryList);
+
+	const debouncedSearch = useCallback(
+		debounce((query: string) => {
+			const filtered = countryList.filter((country) =>
+				country.name.common.toLowerCase().includes(query.toLowerCase()),
+			);
+			setFilteredCountries(filtered);
+		}, 200),
+		[],
+	);
+
+	useEffect(() => {
+		debouncedSearch(search);
+	}, [search, debouncedSearch]);
 
 	return (
 		<SafeAreaView style={styles.safeArea}>
@@ -33,7 +49,7 @@ export default function App() {
 					</View>
 				) : (
 					<FlatList
-						data={countryList}
+						data={filteredCountries}
 						keyExtractor={(item) => item.cca3}
 						renderItem={({ item }) => (
 							<Card mode="outlined" style={styles.card}>
