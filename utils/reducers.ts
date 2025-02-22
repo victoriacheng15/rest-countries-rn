@@ -1,4 +1,6 @@
-import { SET_LOADING, FETCH_SUCCESS, FETCH_ERROR } from "@/utils";
+const SET_LOADING = "SET_LOADING";
+const FETCH_SUCCESS = "FETCH_SUCCESS";
+const FETCH_ERROR = "FETCH_ERROR";
 
 type CountryListAction =
 	| { type: typeof FETCH_SUCCESS; payload: Country[] }
