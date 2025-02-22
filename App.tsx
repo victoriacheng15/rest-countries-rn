@@ -1,3 +1,10 @@
-import { ExpoRouter } from "expo-router";
+import { Slot } from "expo-router";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-export default ExpoRouter;
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <Slot />
+    </SafeAreaProvider>
+  );
+}
