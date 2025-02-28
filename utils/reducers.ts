@@ -1,6 +1,6 @@
-const SET_LOADING = "SET_LOADING";
-const FETCH_SUCCESS = "FETCH_SUCCESS";
-const FETCH_ERROR = "FETCH_ERROR";
+export const SET_LOADING = "SET_LOADING";
+export const FETCH_SUCCESS = "FETCH_SUCCESS";
+export const FETCH_ERROR = "FETCH_ERROR";
 
 type CountryListAction =
 	| { type: typeof FETCH_SUCCESS; payload: Country[] }
