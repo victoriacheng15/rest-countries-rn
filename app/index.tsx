@@ -18,7 +18,7 @@ export default function App() {
 			);
 			setFilteredCountries(filtered);
 		}, 200),
-		[],
+		[countryList],
 	);
 
 	useEffect(() => {
