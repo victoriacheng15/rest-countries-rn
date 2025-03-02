@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { TextInput, Card, Text, ActivityIndicator } from "react-native-paper";
 import debounce from "lodash.debounce";
-import { COLORS } from "@/utils";
+import SearchInput from "@/components/SearchInput";
+import DisplayLoading from "@/components/DisplayLoading";
+import DisplayError from "@/components/DisplayError";
+import DisplayEmptyList from "@/components/DisplayEmptyList";
+import CountryCard from "@/components/CountryCard";
 import { useCountries } from "@/hooks/useCountryList";
 
 export default function App() {
@@ -26,88 +28,34 @@ export default function App() {
 	}, [search, debouncedSearch]);
 
 	return (
-		<SafeAreaView style={styles.safeArea}>
-			<View style={styles.container}>
-				<TextInput
-					mode="outlined"
-					activeOutlineColor={COLORS.primary}
-					label="Search by country name"
-					value={search}
-					onChangeText={(text) => setSearch(text)}
-				/>
-			</View>
+		<View style={styles.container}>
+			{/* Search Input */}
+			<SearchInput search={search} setSearch={setSearch} />
 			{/* List Container */}
 			<View style={styles.listContainer}>
 				{loading ? (
-					<View style={styles.centerContainer}>
-						<ActivityIndicator size="large" color={COLORS.primary} />
-						<Text style={styles.loadingText}>Loading countries...</Text>
-					</View>
+					<DisplayLoading />
 				) : error ? (
-					<View style={styles.centerContainer}>
-						<Text style={styles.errorText}>Error: {error}</Text>
-					</View>
+					<DisplayError error={error} />
 				) : (
 					<FlatList
 						data={search.length > 0 ? filteredCountries : countryList}
 						keyExtractor={(item) => item.cca3}
-						renderItem={({ item }) => (
-							<Card mode="outlined" style={styles.card}>
-								<Card.Cover source={{ uri: item.flags.svg }} />
-								<Card.Title title={item.name.common} />
-								<Card.Content>
-									<Text>
-										<Text>Capital: </Text> {item.capital}
-									</Text>
-									<Text>
-										<Text>Region: </Text> {item.region}
-									</Text>
-								</Card.Content>
-							</Card>
-						)}
-						ListEmptyComponent={
-							// Show message if no countries match the search
-							<View style={styles.centerContainer}>
-								<Text style={styles.emptyText}>No countries found.</Text>
-							</View>
-						}
+						renderItem={({ item }) => <CountryCard country={item} />}
+						ListEmptyComponent={<DisplayEmptyList />}
 					/>
 				)}
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	safeArea: {
-		flex: 1,
-		backgroundColor: COLORS.tertiary,
-		padding: 16,
-	},
 	container: {
-		marginBottom: 16,
+		flex: 1,
+		padding: 16,
 	},
 	listContainer: {
 		flex: 1,
-	},
-	card: {
-		marginBottom: 16,
-	},
-	centerContainer: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	loadingText: {
-		marginTop: 16,
-		fontSize: 16,
-		color: COLORS.primary,
-	},
-	errorText: {
-		fontSize: 16,
-	},
-	emptyText: {
-		fontSize: 16,
-		color: COLORS.primary,
 	},
 });
