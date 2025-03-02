@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-	StyleSheet,
-	View,
-	Text,
-	FlatList,
-	TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import SearchInput from "@/components/SearchInput";
 import DisplayLoading from "@/components/DisplayLoading";
 import DisplayError from "@/components/DisplayError";
@@ -32,8 +26,10 @@ export default function App() {
 				) : (
 					<FlatList
 						data={filteredCountries}
-						keyExtractor={(item) => item.cca3}
-						renderItem={({ item }) => <CountryCard country={item} />}
+						keyExtractor={(item: { cca3: string }) => item.cca3}
+						renderItem={({ item }: { item: Country }) => (
+							<CountryCard country={item} />
+						)}
 						ListEmptyComponent={<DisplayEmptyList />}
 					/>
 				)}
