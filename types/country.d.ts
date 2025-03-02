@@ -22,6 +22,7 @@ interface Country {
 	continents: string;
 	flags: {
 		svg: string;
+		png: string;
 		alt: string;
 	};
 }
