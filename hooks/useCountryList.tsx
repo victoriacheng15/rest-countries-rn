@@ -40,7 +40,7 @@ export function useCountries() {
 		fetchCountryList();
 	}, []);
 
-	const sortedCountries = useMemo(() => {
+	const sortedCountries: Country[] = useMemo(() => {
 		return [...countryList].sort((a, b) => {
 			return a.name.common.localeCompare(b.name.common);
 		});

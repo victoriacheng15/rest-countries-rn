@@ -1,31 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
-import debounce from "lodash.debounce";
 import SearchInput from "@/components/SearchInput";
 import DisplayLoading from "@/components/DisplayLoading";
 import DisplayError from "@/components/DisplayError";
 import DisplayEmptyList from "@/components/DisplayEmptyList";
 import CountryCard from "@/components/CountryCard";
 import { useCountries } from "@/hooks/useCountryList";
+import { useSearch } from "@/hooks/useSearch";
 
 export default function App() {
-	const { countryList, loading, error } = useCountries();
+	const { loading, error } = useCountries();
 	const [search, setSearch] = useState("");
-	const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
-
-	const debouncedSearch = useCallback(
-		debounce((query: string) => {
-			const filtered = countryList.filter((country) =>
-				country.name.common.toLowerCase().includes(query.toLowerCase()),
-			);
-			setFilteredCountries(filtered);
-		}, 200),
-		[countryList],
-	);
-
-	useEffect(() => {
-		debouncedSearch(search);
-	}, [search, debouncedSearch]);
+	const { filteredCountries } = useSearch(search);
 
 	return (
 		<View style={styles.container}>
@@ -39,9 +25,11 @@ export default function App() {
 					<DisplayError error={error} />
 				) : (
 					<FlatList
-						data={search.length > 0 ? filteredCountries : countryList}
-						keyExtractor={(item) => item.cca3}
-						renderItem={({ item }) => <CountryCard country={item} />}
+						data={filteredCountries}
+						keyExtractor={(item: { cca3: string }) => item.cca3}
+						renderItem={({ item }: { item: Country }) => (
+							<CountryCard country={item} />
+						)}
 						ListEmptyComponent={<DisplayEmptyList />}
 					/>
 				)}
