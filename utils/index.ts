@@ -15,6 +15,14 @@ const COLORS = {
 	tertiary: "#E5E5E5",
 };
 
+const sortOptions = [
+	{ label: "Region", value: "region" },
+	{ label: "Area", value: "area" },
+	{ label: "Population", value: "population" },
+	{ label: "Border Countries", value: "borderCountries" },
+	{ label: "Capital", value: "capital" },
+];
+
 export {
 	API_COUNTRY_LIST,
 	API_COOUNTRY,
@@ -23,4 +31,5 @@ export {
 	FETCH_ERROR,
 	countryListReducer,
 	COLORS,
+	sortOptions,
 };
