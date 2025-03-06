@@ -39,7 +39,10 @@ export default function App() {
 			{/* Sort Modal */}
 			<SortModal
 				visible={isModalVisible}
-				onDismiss={() => setIsModalVisible(false)}
+				onDismiss={() => {
+					setSortType("");
+					setIsModalVisible(false);
+				}}
 				onSelectSort={handleSelectSort}
 			/>
 
