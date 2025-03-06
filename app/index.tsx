@@ -5,18 +5,44 @@ import DisplayLoading from "@/components/DisplayLoading";
 import DisplayError from "@/components/DisplayError";
 import DisplayEmptyList from "@/components/DisplayEmptyList";
 import CountryCard from "@/components/CountryCard";
+import SortButton from "@/components/SortButton";
+import SortModal from "@/components/SortModal";
 import { useCountries } from "@/hooks/useCountryList";
-import { useSearch } from "@/hooks/useSearch";
+import { useFilter } from "@/hooks/useFilter";
 
 export default function App() {
+	const [searchTerm, setSearchTerm] = useState("");
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [sortType, setSortType] = useState("");
+
+	const { filteredCountries } = useFilter(searchTerm, sortType);
 	const { loading, error } = useCountries();
-	const [search, setSearch] = useState("");
-	const { filteredCountries } = useSearch(search);
+
+	function handleSelectSort(sortType: string) {
+		setSortType(sortType);
+		setIsModalVisible(false);
+	}
 
 	return (
 		<View style={styles.container}>
 			{/* Search Input */}
-			<SearchInput search={search} setSearch={setSearch} />
+			<SearchInput search={searchTerm} setSearch={setSearchTerm} />
+
+			{/* Sort Button */}
+			<SortButton
+				onSort={() => {
+					setSearchTerm("");
+					setIsModalVisible(true);
+				}}
+			/>
+
+			{/* Sort Modal */}
+			<SortModal
+				visible={isModalVisible}
+				onDismiss={() => setIsModalVisible(false)}
+				onSelectSort={handleSelectSort}
+			/>
+
 			{/* List Container */}
 			<View style={styles.listContainer}>
 				{loading ? (
@@ -45,5 +71,6 @@ const styles = StyleSheet.create({
 	},
 	listContainer: {
 		flex: 1,
+		marginTop: 16,
 	},
 });
