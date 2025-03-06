@@ -23,9 +23,6 @@ export default function CountryCard({ country }: CountryCardProps) {
 				subtitleVariant="titleMedium"
 			/>
 			<Card.Content>
-				<Text variant="titleMedium">
-					{Object.values(nativeName).map(({ official }) => official)}
-				</Text>
 				<Text variant="titleMedium">Capital: {capital}</Text>
 				<Text variant="titleMedium">Region: {region}</Text>
 			</Card.Content>
