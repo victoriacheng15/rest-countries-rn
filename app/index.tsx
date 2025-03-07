@@ -48,17 +48,13 @@ export default function App() {
 
 			{/* List Container */}
 			<View style={styles.listContainer}>
-				{loading ? (
-					<DisplayLoading />
-				) : error ? (
-					<DisplayError error={error} />
-				) : (
+				{loading && <DisplayLoading />}
+				{!loading && error && <DisplayError error={error} />}
+				{!loading && !error && (
 					<FlatList
 						data={filteredCountries}
-						keyExtractor={(item: { cca3: string }) => item.cca3}
-						renderItem={({ item }: { item: Country }) => (
-							<CountryCard country={item} />
-						)}
+						keyExtractor={(item) => item.cca3}
+						renderItem={({ item }) => <CountryCard country={item} />}
 						ListEmptyComponent={<DisplayEmptyList />}
 					/>
 				)}
