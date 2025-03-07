@@ -34,7 +34,7 @@ interface CountryListState {
 }
 
 interface CountryState {
-	country: Country;
+	country: Country | null;
 	loading: boolean;
 	error: string | null;
 }
