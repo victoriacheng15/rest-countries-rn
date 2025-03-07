@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Link } from "expo-router";
 import { Card, Text } from "react-native-paper";
 
 interface CountryCardProps {
@@ -11,22 +12,25 @@ export default function CountryCard({ country }: CountryCardProps) {
 		name: { common, official, nativeName },
 		capital,
 		region,
+		cca3,
 	} = country;
 
 	return (
-		<Card mode="outlined" style={styles.card}>
-			<Card.Cover style={styles.image} source={{ uri: png }} alt={alt} />
-			<Card.Title
-				title={common}
-				titleVariant="titleLarge"
-				subtitle={official}
-				subtitleVariant="titleMedium"
-			/>
-			<Card.Content>
-				<Text variant="titleMedium">Capital: {capital}</Text>
-				<Text variant="titleMedium">Region: {region}</Text>
-			</Card.Content>
-		</Card>
+		<Link href={`/country/${cca3}`} asChild>
+			<Card mode="outlined" style={styles.card}>
+				<Card.Cover style={styles.image} source={{ uri: png }} alt={alt} />
+				<Card.Title
+					title={common}
+					titleVariant="titleLarge"
+					subtitle={official}
+					subtitleVariant="titleMedium"
+				/>
+				<Card.Content>
+					<Text variant="titleMedium">Capital: {capital}</Text>
+					<Text variant="titleMedium">Region: {region}</Text>
+				</Card.Content>
+			</Card>
+		</Link>
 	);
 }
 
