@@ -40,5 +40,25 @@ export function countryListReducer(
 }
 
 export function countryReducer(state: CountryState, action: CountryAction) {
-	// TODO: Implement the countryReducer
+	switch (action.type) {
+		case FETCH_SUCCESS:
+			return {
+				...state,
+				country: action.payload,
+				loading: false,
+			};
+		case FETCH_ERROR:
+			return {
+				...state,
+				error: action.payload,
+				loading: false,
+			};
+		case SET_LOADING:
+			return {
+				...state,
+				loading: action.payload,
+			};
+		default:
+			return state;
+	}
 }
