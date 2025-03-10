@@ -3,6 +3,7 @@ import {
 	FETCH_SUCCESS,
 	FETCH_ERROR,
 	countryListReducer,
+	countryReducer,
 } from "./reducers";
 
 const API_COUNTRY_LIST =
@@ -30,6 +31,7 @@ export {
 	FETCH_SUCCESS,
 	FETCH_ERROR,
 	countryListReducer,
+	countryReducer,
 	COLORS,
 	sortOptions,
 };
