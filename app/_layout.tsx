@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
+import Footer from "@/components/Footer";
 import { COLORS } from "@/utils";
 
 type CountryParmas = {
@@ -12,15 +13,15 @@ export default function Layout() {
 			<Stack
 				screenOptions={{
 					headerStyle: {
-						backgroundColor: "#000001",
+						backgroundColor: COLORS.primary,
 					},
-					headerTintColor: "#fff",
+					headerTintColor: COLORS.secondary,
 					headerTitleStyle: {
 						fontWeight: "bold",
 					},
 				}}
 			>
-				<Stack.Screen name="index" options={{ title: "Country Finder" }} />
+				<Stack.Screen name="index" options={{ title: "World Explorer" }} />
 				<Stack.Screen
 					name="country/[country]"
 					options={({ route }) => {
@@ -31,9 +32,7 @@ export default function Layout() {
 					}}
 				/>
 			</Stack>
-			<View>
-				<Text>Footer placeholder</Text>
-			</View>
+			<Footer />
 		</SafeAreaView>
 	);
 }
