@@ -55,7 +55,7 @@ export default function App() {
 						data={filteredCountries}
 						keyExtractor={(item) => item.cca3}
 						renderItem={({ item }) => <CountryCard country={item} />}
-						ListEmptyComponent={<DisplayEmptyList />}
+						// ListEmptyComponent={<DisplayEmptyList />}
 					/>
 				)}
 			</View>
