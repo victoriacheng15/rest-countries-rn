@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import DisplayLoading from "@/components/DisplayLoading";
 import DisplayError from "@/components/DisplayError";
 import CountryText from "@/components/CountryText";
@@ -28,34 +28,34 @@ export default function Country() {
 			{error && <DisplayError error={error} />}
 			<Image source={{ uri: flags?.png }} style={styles.flag} />
 			<Text style={styles.title}>{name?.official}</Text>
-			<CountryText contentTitle="Capital: " content={capital?.[0] || "N/A"} />
-			<CountryText contentTitle="Continent: " content={continents || "N/A"} />
-			<CountryText contentTitle="Region: " content={region || "N/A"} />
-			<CountryText contentTitle="Subregion: " content={subregion || "N/A"} />
-			<CountryText contentTitle="Area: " content={area?.toString() || "N/A"} />
-			<CountryText
-				contentTitle="Population: "
-				content={population?.toString() || "N/A"}
-			/>
-			<CountryText
-				contentTitle="Languages: "
-				content={languages ? Object.values(languages).join(", ") : "N/A"}
-			/>
-			<CountryText
-				contentTitle="Timezone: "
-				content={
-					Array.isArray(timezones) ? timezones.join(", ") : timezones || "N/A"
-				}
-			/>
-			<CountryText
-				contentTitle="Borders: "
-				content={borders ? Object.values(borders).join(", ") : "N/A"}
-			/>
+			<ScrollView style={styles.scrollView}>
+				<CountryText contentTitle="Capital: " content={capital || "N/A"} />
+				<CountryText contentTitle="Continent: " content={continents || "N/A"} />
+				<CountryText contentTitle="Region: " content={region || "N/A"} />
+				<CountryText contentTitle="Subregion: " content={subregion || "N/A"} />
+				<CountryText
+					contentTitle="Area: "
+					content={area?.toLocaleString() || "N/A"}
+				/>
+				<CountryText
+					contentTitle="Population: "
+					content={population?.toLocaleString() || "N/A"}
+				/>
+				<CountryText
+					contentTitle="Languages: "
+					content={languages ? Object.values(languages).join(", ") : "N/A"}
+				/>
+				<CountryText contentTitle="Timezone: " content={timezones || "N/A"} />
+				<CountryText contentTitle="Borders: " content={borders || "N/A"} />
+			</ScrollView>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	scrollView: {
+		flex: 1,
+	},
 	container: {
 		flex: 1,
 		padding: 30,
